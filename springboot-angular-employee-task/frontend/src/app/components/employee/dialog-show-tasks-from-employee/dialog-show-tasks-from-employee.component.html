@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Show Tasks for {{employeeData.firstName}} </h1>
+<div mat-dialog-content>
+  <ul>
+    <li *ngFor="let tempTask of employeeData.tasks">
+      <a routerLink="/task/{{tempTask.id}}" (click)="taskClose()">{{tempTask.title}}</a>
+    </li>
+  </ul>
+  <div *ngIf="employeeData.tasks.length == 0">No tasks assigned to {{employeeData.firstName}} </div>
+  <div mat-dialog-actions align="end">
+    <a mat-raised-button color="primary" routerLink="/employee/{{employeeData.id}}/tasks" (click)="taskClose()" *ngIf="employeeData.tasks.length>0">See Tasks </a>
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+  </div>
+</div>
+
+

@@ -1,0 +1,9 @@
+springboot-angular-employee-task/frontend/node_modules/
+springboot-angular-employee-task/frontend/.idea/
+springboot-angular-employee-task/frontend/.angular/
+springboot-angular-employee-task/frontend/.vscode/
+springboot-angular-employee-task/frontend/.editorconfig
+
+springboot-angular-employee-task/backend/.idea/
+springboot-angular-employee-task/backend/.mvn/
+springboot-angular-employee-task/backend/target/

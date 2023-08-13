@@ -1,0 +1,31 @@
+.container-table{
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.app-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.app-description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.notification{
+  color: red;
+}
+
+@media (max-width: 768px) {
+    th{
+      display: none;
+    }
+    td{
+      display: block;
+      font-size: 24px;
+    }
+
+}

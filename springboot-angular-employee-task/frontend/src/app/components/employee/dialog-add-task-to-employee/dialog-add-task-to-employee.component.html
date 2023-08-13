@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Add Task to {{employeeData.firstName}}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="taskForm">
+    <br>
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput placeholder="Title">
+      <mat-error *ngIf="taskForm.controls['title'].invalid">{{getErrorMessage("title")}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" matInput placeholder="Description"></textarea>
+      <mat-error *ngIf="taskForm.controls['description'].invalid">{{getErrorMessage("description")}}</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label>Choose expiration date</mat-label>
+      <input formControlName="date" matInput [matDatepicker]="picker" [min]="minDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="taskForm.controls['date'].invalid">{{getErrorMessage("date")}}</mat-error>
+    </mat-form-field>
+
+  </form>
+
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button color="primary" (click)="createTaskToEmployee()">Save</button>
+  </div>
+
+</div>
+

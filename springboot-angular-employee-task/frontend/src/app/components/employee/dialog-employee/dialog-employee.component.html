@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Employee</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="employeeForm">
+    <br>
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input formControlName="firstName" matInput placeholder="First Name">
+      <mat-error *ngIf="employeeForm.controls['firstName'].invalid">{{getErrorMessage("firstName")}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input formControlName="lastName" matInput placeholder="Last Name">
+      <mat-error *ngIf="employeeForm.controls['lastName'].invalid">{{getErrorMessage("lastName")}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input formControlName="email" matInput placeholder="Email">
+      <mat-error *ngIf="employeeForm.controls['email'].invalid">{{getErrorMessage("email")}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="gender">
+        <mat-option value="Male">Male</mat-option>
+        <mat-option value="Female">Female</mat-option>
+        <mat-option value="rather">Rather not say</mat-option>
+      </mat-select>
+      <mat-error *ngIf="employeeForm.controls['gender'].invalid">{{getErrorMessage("gender")}}</mat-error>
+    </mat-form-field>
+  </form>
+
+
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button color="primary" (click)="createUpdateEmployee()">{{actionButton}}</button>
+  </div>
+
+</div>
+

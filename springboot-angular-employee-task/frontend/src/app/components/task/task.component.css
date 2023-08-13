@@ -1,0 +1,71 @@
+
+.container-task {
+  display: grid;
+  grid-template-areas:
+    'header header header';
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 6rem;
+}
+
+.container-card {
+  grid-area: header;
+  background-color: cadetblue;
+  padding: 1rem;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.task-title {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.page-description {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.notification {
+  color: #ff3333;
+}
+
+mat-card {
+  padding: 2rem;
+  border: 1px solid #ccc;
+}
+
+mat-card-header {
+  background-color: #2196f3;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+mat-card-content{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+
+@media (max-width: 768px) {
+  .container-task{
+    display: flex;
+    flex-direction: column;
+    max-width: 20rem;
+    margin: 0 auto;
+  }
+
+}
+

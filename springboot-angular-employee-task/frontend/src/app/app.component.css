@@ -1,0 +1,14 @@
+.mat-toolbar {
+  background-color: black;
+  color: white;
+}
+
+.toolbar-item {
+  font-size: 18px;
+}
+
+.container-main{
+  padding-top: 4rem;
+  margin-bottom: 2rem;
+}
+

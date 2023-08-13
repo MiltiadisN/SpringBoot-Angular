@@ -1,0 +1,25 @@
+<div class="container-task">
+  <div class="container-card">
+    <h1 class="task-title">{{pageTitle}}</h1>
+    <p class="page-description">{{pageDescription}} {{employee.firstName}}</p>
+
+  </div>
+
+    <div *ngFor="let task of tasks">
+      <div *ngIf="taskExists(task)">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{task?.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><b>Task is assigned to:</b> {{task?.employee?.firstName}}</p>
+          <p><b>Description : </b>{{task?.description}}</p>
+          <p><b>Task expiration Date :</b> {{task?.date | date}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" class="update-button" (click)="updateTaskDialog(task)">Update</button>
+          <button mat-flat-button color="warn" class="delete-button" (click)="deleteTask(task)">Delete</button>
+        </mat-card-actions>
+      </mat-card></div>
+    </div>
+</div>
