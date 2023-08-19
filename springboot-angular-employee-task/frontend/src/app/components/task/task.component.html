@@ -15,6 +15,7 @@
           <p><b>Task is assigned to:</b> {{task?.employee?.firstName}}</p>
           <p><b>Description : </b>{{task?.description}}</p>
           <p><b>Task expiration Date :</b> {{task?.date | date}}</p>
+          <p><b>Remaining time for this task:</b> {{getDaysRemaining(task)}}</p>
         </mat-card-content>
         <mat-card-actions>
           <button mat-flat-button color="primary" class="update-button" (click)="updateTaskDialog(task)">Update</button>

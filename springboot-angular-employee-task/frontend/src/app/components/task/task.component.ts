@@ -8,6 +8,8 @@ import {EmployeeService} from "../../services/employee.service";
 import {Employee} from "../../common/employee";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
+
+
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -164,6 +166,22 @@ export class TaskComponent implements OnInit {
       panelClass: panelClass
     });
   }
+
+
+  // method to calculate and return the remaining days for a task
+  getDaysRemaining(task: Task): string {
+    if (task && task.date) {
+      const currentDate = new Date();
+      const taskDate = new Date(task.date);
+      const timeDifference = taskDate.getTime() - currentDate.getTime();
+      const daysRemaining = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      return `${daysRemaining} days left`;
+    }
+    return '';
+  }
+
+
+
 
 
 }
