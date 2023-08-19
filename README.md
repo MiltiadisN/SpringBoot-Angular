@@ -41,8 +41,8 @@ Just create the database, no need to worry about creating tables. When you run t
   ![image](https://github.com/MiltiadisN/test/assets/103901423/183fa4cc-9be3-4ff0-bda7-60303d1f0df5)      
   **5. Search, Pagination, Sorting:** Find employees by name using a search feature, view a limited number of records at a time and sort employee records based on first name, last name, email, and gender.          
   ![image](https://github.com/MiltiadisN/test/assets/103901423/0b435eca-3a3b-48a7-b98a-1e396c190c69)     
-  **6. Task Management:** Manage tasks with title, description, and expiration date.     
-  ![image](https://github.com/MiltiadisN/test/assets/103901423/87a2d9b5-e350-4dc4-8a14-90dbce6ccb77)   
+  **6. Task Management:** Manage tasks with title, description, and expiration date.        
+  ![image](https://github.com/MiltiadisN/SpringBoot-Angular/assets/103901423/9da3187e-98ce-41ce-a32a-395392c15f1f)   
   **7. Task Update Form:** Update task details, including title, description, and expiration date.  
   ![image](https://github.com/MiltiadisN/test/assets/103901423/615d7e1a-59a0-4e4d-8bdf-00fb6197c2e9)  
 
