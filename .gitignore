@@ -7,4 +7,4 @@ springboot-angular-employee-task/frontend/.editorconfig
 springboot-angular-employee-task/backend/.idea/
 springboot-angular-employee-task/backend/.mvn/
 springboot-angular-employee-task/backend/target/
-.idea
+.idea/
