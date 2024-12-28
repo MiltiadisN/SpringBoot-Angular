@@ -1,16 +1,20 @@
 package com.example.backend.controller;
 
+import com.example.backend.entity.Manager;
 import com.example.backend.entity.Task;
 import com.example.backend.service.TaskService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200/") // Enable Cross-Origin Resource Sharing (CORS) for the specified origin
-@RestController //Marks this class as a RESTful controller
+
+@RestController
+@RequestMapping("api/api-task")
 public class TaskController {
 
-    private TaskService taskService;
+    private final TaskService taskService;
 
 
     public TaskController(TaskService taskService) {
@@ -37,8 +41,8 @@ public class TaskController {
 
     // Endpoint to create a new task associated with an employee
     @PostMapping("/task/{employeeId}/employee")
-    public Task createTaskByEmployeeId(@RequestBody Task task, @PathVariable Long employeeId) {
-        return taskService.createTaskByEmployeeId(task, employeeId);
+    public Task createTaskByEmployeeId(@RequestBody Task task, @PathVariable Long employeeId, @RequestParam Long managerId) {
+        return taskService.createTaskByEmployeeId(task, employeeId, managerId);
     }
 
     // Endpoint to update a specific task by its ID
@@ -54,7 +58,10 @@ public class TaskController {
     }
 
 
-
+    @GetMapping("/tasks/manager-task/{managerId}")
+    public List<Task> getTasksForManager(@PathVariable Long managerId) {
+        return taskService.getTasksByManagerId(managerId);
+    }
 
 
 

@@ -1,4 +1,6 @@
 package com.example.backend.entity;
+import com.example.backend.service.jwt.ManagerSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,8 +36,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Task> tasks;
 
-
-
-
+    @ManyToOne
+    @JoinColumn
+    @JsonSerialize(using = ManagerSerializer.class) // Custom serializer for the Manager
+    private Manager manager;
 
 }

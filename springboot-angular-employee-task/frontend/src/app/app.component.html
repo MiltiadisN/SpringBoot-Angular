@@ -1,6 +1,13 @@
 <mat-toolbar class="mat-elevation-z4">
-  <a mat-stroked-button routerLink="/employees" class="toolbar-item">Employees</a>
-  <a mat-stroked-button routerLink="/tasks" class="toolbar-item">All Tasks</a>
+  <a mat-stroked-button routerLink="/employees" class="toolbar-item" *ngIf="isAuthenticated">Employees</a>
+  <a mat-stroked-button routerLink="/tasks" class="toolbar-item" *ngIf="isAuthenticated">All Tasks</a>
+  <a mat-stroked-button routerLink="/profile" class="toolbar-item" *ngIf="isAuthenticated">Profile</a>
+
+  <span class="spacer"></span>
+
+  <a mat-stroked-button routerLink="/login" class="toolbar-item" *ngIf="!isAuthenticated">Login</a>
+  <a mat-stroked-button routerLink="/register" class="toolbar-item" *ngIf="!isAuthenticated">Register</a>
+  <a mat-stroked-button routerLink="" class="toolbar-item" *ngIf="isAuthenticated" (click)="logout()">Logout</a>
 </mat-toolbar>
 
 

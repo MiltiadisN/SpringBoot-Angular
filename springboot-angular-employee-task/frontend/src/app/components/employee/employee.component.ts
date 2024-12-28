@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {DialogAddTaskToEmployeeComponent} from "./dialog-add-task-to-employee/dialog-add-task-to-employee.component";
 import {DialogShowTasksFromEmployeeComponent} from "./dialog-show-tasks-from-employee/dialog-show-tasks-from-employee.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { Employee } from 'src/app/common/employee';
 
 
 @Component({
@@ -44,13 +45,24 @@ export class EmployeeComponent implements OnInit {
 
   // Function to fetch all employees
   getAllEmployees() {
-    this.employeeService.getEmployee()
+    const managerId = localStorage.getItem('managerId');
+
+    if (!managerId) {
+      this.showSnackbar('Manager ID not found!', ['mat-toolbar', 'mat-warn']);
+      return;
+    }
+
+    this.employeeService.getEmployeesByManagerId(+managerId)
       .subscribe({
-        next: (res) => {
-          //console.log(res);
-          this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+        next: (res: Employee[]) => {
+          if (!res || res.length === 0) {
+            this.showSnackbar('No employees found for this Manager!', ['mat-toolbar', 'mat-warn']);
+            this.dataSource = new MatTableDataSource<Employee>([]); 
+          } else {
+            this.dataSource = new MatTableDataSource<Employee>(res); 
+          }
+          // this.dataSource.paginator = this.paginator; // Enable pagination if needed
+          this.dataSource.sort = this.sort; 
         },
         error: (err) => {
           this.showSnackbar('Error while fetching the records!', ['mat-toolbar', 'mat-warn']);

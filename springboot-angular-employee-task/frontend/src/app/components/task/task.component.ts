@@ -54,14 +54,14 @@ export class TaskComponent implements OnInit {
         this.pageTitle = 'Employee Tasks';
         this.pageDescription = 'Here you can find the tasks assigned to employee:';
       } else if ('taskId' in params) {
-        // Fetch a specific task
         this.taskId = params['taskId'];
         this.getTask();
         this.pageTitle = 'Selected Task';
         this.pageDescription = 'Here you can see the details of a specific task.';
       } else {
         // Fetch all tasks
-        this.getAllTasks();
+        // this.getAllTasks();
+        this.getManagerTasks();
         this.pageTitle = 'All Tasks';
         this.pageDescription = 'Here you can find the list of tasks assigned to different employees.';
       }
@@ -87,7 +87,6 @@ export class TaskComponent implements OnInit {
   // Function to fetch tasks assigned to a specific employee
   getEmployeeTasks(): void {
     this.tasks = [];
-    // Fetch employee-specific tasks using employeeId
     this.employeeService.getEmployeeById(this.employeeId).subscribe({
       next: (employee) => {
         //console.log(employee);
@@ -155,7 +154,7 @@ export class TaskComponent implements OnInit {
   }
 
   taskExists(task: Task): boolean {
-    return task && task.id != null; // Check if the task is not null and has a non-null id
+    return task && task.id != null;
   }
 
 
@@ -180,6 +179,28 @@ export class TaskComponent implements OnInit {
     return '';
   }
 
+  getManagerTasks() {
+    this.tasks = [];
+    const managerId = localStorage.getItem('managerId');
+    //const managerId = this.route.snapshot.paramMap.get('managerId');
+    //console.log('Manager ID:', managerId);
+
+    const token = localStorage.getItem('token');
+    //console.log('Token in Local Storage:', token); // Debugging line
+    
+    if (managerId) {
+        this.taskService.getTasksByManagerId(+managerId).subscribe({
+            next: (res) => {
+                this.tasks = res;
+            },
+            error: (err) => {
+                this.showSnackbar('Error fetching manager tasks!', ['mat-toolbar', 'mat-warn']);
+            }
+        });
+    } else {
+        this.showSnackbar('Manager ID not found in route!', ['mat-toolbar', 'mat-warn']);
+    }
+}
 
 
 

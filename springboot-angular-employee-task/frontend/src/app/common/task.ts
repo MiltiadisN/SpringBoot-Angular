@@ -1,4 +1,5 @@
 import {Employee} from "./employee";
+import { Manager } from "./manager";
 
 export class Task {
   constructor(
@@ -6,9 +7,9 @@ export class Task {
     public title: string,
     public description: string,
     public date: Date,
-    public employee: Employee
+    public employee: Employee,
+    public manager: Manager
   ) {
   }
-
 
 }

@@ -20,4 +20,8 @@ public interface EmployeeService {
 
     // Delete an employee by their ID
     void deleteEmployee(Long id);
+
+    List<Employee> getEmployeesByManagerId(Long id);
+
+    Employee createEmployeeByManagerId(Employee employee, Long managerId);
 }

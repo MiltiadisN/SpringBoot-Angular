@@ -12,13 +12,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class DialogEmployeeComponent implements OnInit {
 
-  //declare the employeeForm as a FormGroup
   employeeForm!: FormGroup;
 
-  // Variable to determine whether to show "Save" or "Update" button in the form
   actionButton: string = "Save";
 
-  //inject FormBuilder,EmployeeService, MatDialogRef,snackBar
   constructor(private formBuilder: FormBuilder,
               private employeeService: EmployeeService,
               private dialogRef: MatDialogRef<DialogEmployeeComponent>,
@@ -37,7 +34,6 @@ export class DialogEmployeeComponent implements OnInit {
 
     //console.log(this.updateEmployeeData);
 
-    // Check if there's data for updating an employee, if yes, change the actionButton to "Update" and populate form fields
     if (this.updateEmployeeData) {
       this.actionButton = "Update";
       //patch all the values
@@ -80,19 +76,25 @@ export class DialogEmployeeComponent implements OnInit {
 
   // Create or update an employee based on form data
   createUpdateEmployee() {
+    const managerId = localStorage.getItem('managerId');
+
+    if (!managerId) {
+      this.showSnackbar('Manager ID not found!', ['mat-toolbar', 'mat-warn']);
+      return;
+    }
+
     if (!this.updateEmployeeData) {
       //console.log(this.employeeForm.value);
       if (this.employeeForm.valid) {
-        this.employeeService.createEmployee(this.employeeForm.value)
+        this.employeeService.createEmployeeByManagerId(this.employeeForm.value, +managerId)
           .subscribe({
             next: (res) => {
 
-              // Show error message in a snack bar
               this.showSnackbar('Employee created Successfully', ['mat-toolbar', 'mat-primary']);
 
 
-              this.employeeForm.reset(); //refresh employeeForm after successfully creating the Employee
-              this.dialogRef.close('Save');// Close the dialog with 'Save' result
+              this.employeeForm.reset(); 
+              this.dialogRef.close('Save');
 
             },
             error: () => {
@@ -107,14 +109,10 @@ export class DialogEmployeeComponent implements OnInit {
         .subscribe({
           next: (res) => {
             this.showSnackbar('Employee updated Successfully', ['mat-toolbar', 'mat-primary']);
-
-            // Reset the form after successful update
             this.employeeForm.reset();
-            // Close the dialog with 'Update' result
             this.dialogRef.close('Update');
           },
           error: () => {
-            // Show error message in a snack bar
             this.showSnackbar('Error while updating employee', ['mat-toolbar', 'mat-warn']);
 
           }

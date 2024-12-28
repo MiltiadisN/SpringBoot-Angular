@@ -2,15 +2,16 @@ package com.example.backend.controller;
 
 import com.example.backend.entity.Employee;
 import com.example.backend.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200/") // Enable Cross-Origin Resource Sharing (CORS) for the specified origin
 @RestController
+@RequestMapping("api/api-employee")
 public class EmployeeController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -29,10 +30,16 @@ public class EmployeeController {
     }
 
     // Endpoint to create a new employee
-    @PostMapping("/create-employee")
+    /*@PostMapping("/create-employee")
     public Employee createEmployee(@RequestBody Employee employee){
         return employeeService.createEmployee(employee);
+    }*/
+
+    @PostMapping("/create-employee/{managerId}")
+    public Employee createEmployeeByManagerId(@RequestBody Employee employee, @PathVariable Long managerId) {
+        return employeeService.createEmployeeByManagerId(employee, managerId);
     }
+
 
     // Endpoint to update a specific employee by its ID
     @PutMapping("/update/employee/{employeeId}")
@@ -44,6 +51,15 @@ public class EmployeeController {
     @DeleteMapping("/delete/employee/{employeeId}")
     public void deleteEmployee(@PathVariable("employeeId") Long employeeId) {
         employeeService.deleteEmployee(employeeId);
+    }
+
+    @GetMapping("/manager/{id}")
+    public ResponseEntity<List<Employee>> getEmployeesByManager(@PathVariable("id") Long managerId) {
+        List<Employee> employees = employeeService.getEmployeesByManagerId(managerId);
+        if (employees.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(employees);
     }
 
 }

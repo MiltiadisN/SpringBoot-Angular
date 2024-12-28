@@ -1,0 +1,11 @@
+<div class="profile-container" *ngIf="profile">
+    <h1 class="welcome-message">Welcome, {{ profile.name }}!</h1>
+    <p class="project-description">
+        You are currently viewing your profile in our project, which leverages Angular and Spring Boot to provide a seamless and interactive user experience.
+    </p>
+    
+    <div class="button-container">
+        <button mat-raised-button color="primary" (click)="openRegisterDialog(profile)">Edit Profile</button>
+        <button mat-raised-button color="warn" (click)="confirmDeleteProfile()">Delete Profile</button>
+    </div>
+</div>

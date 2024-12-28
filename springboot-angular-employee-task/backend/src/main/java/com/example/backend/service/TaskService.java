@@ -14,8 +14,8 @@ public interface TaskService {
     // Create a new task
     Task createTask(Task task);
 
-    //Create task by Employee ID
-    Task createTaskByEmployeeId(Task task, Long employeeId);
+    // create task by employee id
+    Task createTaskByEmployeeId(Task task, Long employeeId, Long managerId);
 
     // Update a task by their ID
     Task updateTask(Task task, Long id);
@@ -23,4 +23,6 @@ public interface TaskService {
     // Delete a task by their ID
     void deleteTask(Long id);
 
+
+    List<Task> getTasksByManagerId(Long managerId);
 }

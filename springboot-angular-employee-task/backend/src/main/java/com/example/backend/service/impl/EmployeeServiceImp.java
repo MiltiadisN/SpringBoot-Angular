@@ -1,7 +1,9 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.dao.EmployeeRepository;
+import com.example.backend.dao.ManagerRepository;
 import com.example.backend.entity.Employee;
+import com.example.backend.entity.Manager;
 import com.example.backend.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,14 @@ import java.util.List;
 public class EmployeeServiceImp implements EmployeeService {
 
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ManagerRepository managerRepository;
 
     // Constructor injection
-    public EmployeeServiceImp(EmployeeRepository employeeRepository){
+    public EmployeeServiceImp(EmployeeRepository employeeRepository,
+                              ManagerRepository managerRepository){
         this.employeeRepository = employeeRepository;
+        this.managerRepository = managerRepository;
     }
 
     // Implementation of the getAllEmployee method
@@ -54,6 +59,20 @@ public class EmployeeServiceImp implements EmployeeService {
         employeeRepository.deleteById(id);
     }
 
+
+    @Override
+    public List<Employee> getEmployeesByManagerId(Long id) {
+        return employeeRepository.findByManagerId(id);
+    }
+
+    @Override
+    public Employee createEmployeeByManagerId(Employee employee, Long managerId){
+        Manager manager = managerRepository.findById(managerId)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        employee.setManager(manager);
+        return employeeRepository.save(employee);
+    }
 
 
 

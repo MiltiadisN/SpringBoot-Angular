@@ -1,3 +1,4 @@
+import { Manager } from "./manager";
 import {Task} from "./task";
 
 export class Employee {
@@ -7,7 +8,8 @@ export class Employee {
               public lastName: string,
               public email: string,
               public gender: string,
-              public tasks: Task[]
+              public tasks: Task[],
+              public manager: Manager
   ) {
   }
 }

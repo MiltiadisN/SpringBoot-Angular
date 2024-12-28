@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Update Manager</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="registerForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input formControlName="name" matInput placeholder="Name">
+      <mat-error *ngIf="registerForm.controls['name'].invalid">{{ getErrorMessage('name') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input formControlName="email" matInput placeholder="Email">
+      <mat-error *ngIf="registerForm.controls['email'].invalid">{{ getErrorMessage('email') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" formControlName="password" matInput placeholder="Password">
+      <mat-error *ngIf="registerForm.controls['password'].invalid">{{ getErrorMessage('password') }}</mat-error>
+    </mat-form-field>
+
+   
+    <mat-form-field appearance="outline">
+      <mat-label>City</mat-label>
+      <input formControlName="city" matInput placeholder="City">
+      <mat-error *ngIf="registerForm.controls['city'].invalid">{{ getErrorMessage('city') }}</mat-error>
+    </mat-form-field>
+  </form>
+
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button color="primary" (click)="createUpdateManager()">{{ actionButton }}</button>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<mat-card class="verify-card">
+    <h2>Verify Your Email</h2>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p>Please enter the verification code sent to your email.</p>
+    <form [formGroup]="verifyForm" (ngSubmit)="handleVerify()">
+        <!-- Verification Code Field -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Verification Code</mat-label>
+            <input matInput type="text" formControlName="code" required />
+            <mat-error *ngIf="verifyForm.get('code')?.invalid && verifyForm.get('code')?.touched">
+                Code is required
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Verify Button -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="verifyForm.invalid" class="verify-button">Verify</button>
+    </form>
+</mat-card>

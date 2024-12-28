@@ -1,8 +1,10 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.dao.EmployeeRepository;
+import com.example.backend.dao.ManagerRepository;
 import com.example.backend.dao.TaskRepository;
 import com.example.backend.entity.Employee;
+import com.example.backend.entity.Manager;
 import com.example.backend.entity.Task;
 import com.example.backend.service.TaskService;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,15 @@ import java.util.List;
 @Service
 public class TaskServiceImp implements TaskService {
 
-    private TaskRepository taskRepository;
-    private EmployeeRepository employeeRepository;
+    private final TaskRepository taskRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ManagerRepository managerRepository;
 
     // Constructor dependency injection
-    public TaskServiceImp(TaskRepository taskRepository, EmployeeRepository employeeRepository){
+    public TaskServiceImp(TaskRepository taskRepository, EmployeeRepository employeeRepository, ManagerRepository managerRepository){
         this.taskRepository = taskRepository;
         this.employeeRepository = employeeRepository;
+        this.managerRepository = managerRepository;
     }
 
     // Implementation of the getAllTasks method
@@ -43,11 +47,14 @@ public class TaskServiceImp implements TaskService {
 
     // create task by employee id
     @Override
-    public Task createTaskByEmployeeId(Task task, Long employeeId){
+    public Task createTaskByEmployeeId(Task task, Long employeeId, Long managerId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
+        Manager manager = managerRepository.findById(managerId)
+                .orElseThrow(() -> new RuntimeException("Manager not found"));
 
         task.setEmployee(employee);
+        task.setManager(manager); // Set the manager for the task
         return taskRepository.save(task);
     }
 
@@ -67,7 +74,12 @@ public class TaskServiceImp implements TaskService {
         taskRepository.deleteById(id);
     }
 
+    @Override
+    public List<Task> getTasksByManagerId(Long managerId) {
+        Manager manager = managerRepository.findById(managerId)
+                .orElseThrow(() -> new RuntimeException("Manager not found"));
 
-
+        return taskRepository.findByManager(manager);
+    }
 
 }

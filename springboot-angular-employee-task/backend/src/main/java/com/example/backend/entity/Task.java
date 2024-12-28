@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 
 import com.example.backend.service.impl.EmployeeSerializer;
+import com.example.backend.service.jwt.ManagerSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -33,7 +34,10 @@ public class Task {
     @JsonSerialize(using = EmployeeSerializer.class) // Custom serializer for the Employee
     private Employee employee;
 
-
+    @ManyToOne
+    @JoinColumn
+    @JsonSerialize(using = ManagerSerializer.class)
+    private Manager manager;
 
 
 

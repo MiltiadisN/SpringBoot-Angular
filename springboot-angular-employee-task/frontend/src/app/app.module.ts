@@ -7,7 +7,7 @@ import { RouterModule, Routes} from "@angular/router";
 import { EmployeeComponent } from './components/employee/employee.component';
 import { TaskComponent } from './components/task/task.component';
 import { DialogEmployeeComponent } from './components/employee/dialog-employee/dialog-employee.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -26,15 +26,28 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from "@angular/material/core";
 import {DialogShowTasksFromEmployeeComponent } from './components/employee/dialog-show-tasks-from-employee/dialog-show-tasks-from-employee.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { LoginComponent } from './components/manager/login/login.component';
+import { RegisterComponent } from './components/manager/register/register.component';
+import { managersGuard } from './services/managers.guard';
+import { ProfileComponent } from './components/manager/profile/profile.component';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { UpdateComponent } from './components/manager/update/update.component';
+import { VerifyEmailComponent } from './components/manager/verify-email/verify-email.component';
 
 
 const routes: Routes=[
 
-  {path:'employee/:employeeId/tasks', component: TaskComponent},
-  {path:'task/:taskId', component: TaskComponent },
-  {path:'employees', component:EmployeeComponent},
-  {path:'tasks', component:TaskComponent},
-  {path:'', component:EmployeeComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'verify-email', component: VerifyEmailComponent }, 
+  {path: 'profile', component: ProfileComponent, canActivate: [managersGuard]},
+  {path:'employee/:employeeId/tasks', component: TaskComponent, canActivate: [managersGuard]},
+  {path:'task/:taskId', component: TaskComponent, canActivate: [managersGuard] },
+  {path:'employees', component:EmployeeComponent, canActivate: [managersGuard]},
+  {path:'tasks', component:TaskComponent, canActivate: [managersGuard]},
+  {path: '**', component: LoginComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'}
+  
 ]
 
 @NgModule({
@@ -46,7 +59,11 @@ const routes: Routes=[
     DialogTaskComponent,
     DialogAddTaskToEmployeeComponent,
     DialogShowTasksFromEmployeeComponent,
-
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    UpdateComponent,
+    VerifyEmailComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -71,6 +88,7 @@ const routes: Routes=[
     MatSnackBarModule
   ],
   providers: [
+   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

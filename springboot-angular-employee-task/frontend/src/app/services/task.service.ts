@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Task} from "../common/task";
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import {Task} from "../common/task";
 export class TaskService {
 
   // Define the base URL for API endpoints
-  private baseUrl = "http://localhost:8080";
+  private baseUrl = `${environment.BASE_URL}/api-task`;
 
   constructor(private http: HttpClient) {
   }
@@ -34,12 +35,16 @@ export class TaskService {
     return this.http.delete<Task>(`${this.baseUrl}/delete/task/${taskId}`);
   }
 
-  // Function to create a new task and assign it to an employee
-  createTaskToEmployee(task?: Task, employeeId?: any): Observable<Task> {
-    return this.http.post<Task>(`${this.baseUrl}/task/${employeeId}/employee`, task);
+  // Function to create a new task and assign it to an employee with manager ID
+  createTaskToEmployee(task: Task, employeeId: number, managerId: number): Observable<Task> {
+    const url = `${this.baseUrl}/task/${employeeId}/employee?managerId=${managerId}`;
+    return this.http.post<Task>(url, task);
   }
 
+  // Get tasks for the logged-in manager
+  getTasksByManagerId(managerId: number): Observable<any> {
+      return this.http.get<any>(`${this.baseUrl}/tasks/manager-task/${managerId}`);
+    }
 
 }
-
 

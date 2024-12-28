@@ -55,7 +55,9 @@ export class DialogAddTaskToEmployeeComponent implements OnInit {
   // Create task and assign it to the employee
   createTaskToEmployee() {
     if (this.taskForm.valid) {
-      this.taskService.createTaskToEmployee(this.taskForm.value, this.employeeData.id)
+      const managerId = Number(localStorage.getItem('managerId'));
+      //console.log("managerId", managerId);
+      this.taskService.createTaskToEmployee(this.taskForm.value, this.employeeData.id,managerId)
         .subscribe({
           next: (res) => {
 
@@ -63,8 +65,8 @@ export class DialogAddTaskToEmployeeComponent implements OnInit {
             this.showSnackbar('Task created Successfully to Employee', ['mat-toolbar', 'mat-primary']);
 
 
-            this.taskForm.reset(); //reset employeeForm after successfully creating the Task to Employee
-            this.dialogRef.close('Save'); //close the dialog with 'Save' result
+            this.taskForm.reset(); 
+            this.dialogRef.close('Save');
           },
           error: () => {
             // Show error message in a snack bar
